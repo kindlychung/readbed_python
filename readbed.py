@@ -17,15 +17,19 @@ def byteToNum(xbyte):
     xstring = [x[i:i+2] for i in range(0, len(x), 2)]
     xgen = [str(bitsToNum(i)) for i in xstring]
     xgen.reverse()
-    xgenstring = """const std::vector<int> """ + "{" + ", ".join(xgen) + "}" + ","
+    xgenstring = """std::vector<int> """ + "{" + ", ".join(xgen) + "}"
     return xgenstring
 
 
 # print out c++ code for inclusion in a header file
-print("""const std::vector< const std::vector<int> > gencodes {""")
+print("""const std::vector< std::vector<int> > gencodes {""")
 for i in range(256):
     # print("{0:08b}".format(i))
     print("    ", end="")
-    print(byteToNum(i))
+    print(byteToNum(i), end="")
+    if i != 255:
+        print(",")
+    else:
+        print("")
 
-print("}")
+print("};")
